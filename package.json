@@ -1,0 +1,31 @@
+{
+  "name": "not-hacker-news",
+  "version": "1.0.0",
+  "description": "A Twitter bot that tweets top Hacker News content every hour.",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "twitter",
+    "bot",
+    "hacker",
+    "news",
+    "api"
+  ],
+  "author": "Snehanshu Phukon",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node-cron": "^3.0.1",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.0",
+    "lodash": "^4.17.21",
+    "node-cron": "^3.0.0",
+    "twitter-api-v2": "^1.12.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  }
+}
