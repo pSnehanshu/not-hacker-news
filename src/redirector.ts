@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import express from 'express';
 import type { IItem } from 'hacker-news-api-types';
 import path from 'path';

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import cron from 'node-cron';
 import main from './bot';
 import redirector from './redirector';

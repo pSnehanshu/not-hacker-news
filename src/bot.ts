@@ -1,5 +1,13 @@
-import axios from './hn-axios';
 import type { IItem } from 'hacker-news-api-types';
+import { TwitterClient } from 'twitter-api-client';
+import axios from './hn-axios';
+
+const twitter = new TwitterClient({
+  apiKey: process.env.TWITTER_API_KEY as string,
+  apiSecret: process.env.TWITTER_API_SECRET as string,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN as string,
+  accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET as string,
+});
 
 async function fetchTopContent(): Promise<IItem[]> {
   const { data: topIds } = await axios.get<number[]>('/topstories.json');
@@ -29,8 +37,16 @@ function generateTweets(posts: IItem[]) {
   return tweets;
 }
 
-async function postTweetsAsThread(tweets: string[]) {
+function postTweetsAsThread(tweets: string[]) {
   console.log(tweets);
+
+  return Promise.all(
+    tweets.map(tweet =>
+      twitter.tweetsV2.createTweet({
+        text: tweet,
+      }),
+    ),
+  );
 }
 
 export default async function main() {
