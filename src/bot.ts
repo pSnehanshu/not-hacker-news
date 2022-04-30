@@ -17,8 +17,7 @@ async function fetchTopContent(): Promise<IItem[]> {
 
 function generateTweets(posts: IItem[]) {
   const tweets = posts.map(
-    post =>
-      `(${post.score} pt) ${post.title} - https://news.ycombinator.com/item?id=${post.id}`,
+    post => `${post.title} https://not-hacker-news.fly.dev/hn/${post.id}`,
   );
 
   return tweets;
