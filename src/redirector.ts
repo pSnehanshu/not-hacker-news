@@ -14,6 +14,7 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 app.get('/', (req, res) => res.sendStatus(200));
 
 app.get('/hn/:id', async (req, res) => {
+  const protocol = 'https';
   try {
     const { id } = req.params;
     const { data: post } = await axios.get<IItem>(`/item/${id}.json`);
@@ -22,15 +23,18 @@ app.get('/hn/:id', async (req, res) => {
       return res.sendStatus(404);
     }
 
-    const protocol = 'https';
-
     res.render('redirect', {
       post,
       host: protocol + '://' + req.get('host'),
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send('Hacker News API error');
+
+    // Redirect anyway if fails
+    return res.render('redirect', {
+      post: { id: req.params.id },
+      host: protocol + '://' + req.get('host'),
+    });
   }
 });
 

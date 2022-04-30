@@ -7,12 +7,18 @@ async function fetchTopContent(): Promise<IItem[]> {
   const top5 = topIds.slice(0, 5);
 
   const top5items = await Promise.all(
-    top5.map(itemId => {
-      return axios.get<IItem>(`/item/${itemId}.json`).then(res => res.data);
-    }),
+    top5.map(itemId =>
+      axios
+        .get<IItem>(`/item/${itemId}.json`)
+        .then(res => res.data)
+        .catch<null>(err => {
+          console.error(err);
+          return null;
+        }),
+    ),
   );
 
-  return top5items;
+  return top5items.filter(item => item !== null) as IItem[];
 }
 
 function generateTweets(posts: IItem[]) {
