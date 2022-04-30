@@ -1,0 +1,26 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="refresh"
+      content="0; url = https://news.ycombinator.com/item?id=<%=post.id%>"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<%=post.title%>" />
+    <meta
+      name="twitter:description"
+      content="Author: <%=post.by%>, score: <%=post.score%>"
+    />
+    <meta property="og:image" content="<%=host%>/static/hn-logo.webp" />
+    <meta property="og:image:type" content="image/webp" />
+
+    <title><%=post.title%></title>
+  </head>
+  <body>
+    If you're not automtically redirected,
+    <a href="https://news.ycombinator.com/item?id=<%=post.id%>">click here</a>.
+  </body>
+</html>
