@@ -1,5 +1,5 @@
 import type { IItem } from 'hacker-news-api-types';
-import { TwitterClient } from 'twitter-api-client';
+import { CreateTweetParams, TwitterClient } from 'twitter-api-client';
 import axios from './hn-axios';
 
 const twitter = new TwitterClient({
@@ -31,22 +31,37 @@ async function fetchTopContent(): Promise<IItem[]> {
 
 function generateTweets(posts: IItem[]) {
   const tweets = posts.map(
-    post => `${post.title} https://not-hacker-news.fly.dev/hn/${post.id}`,
+    post =>
+      `${post.title} (${post.score} pt) https://not-hacker-news.fly.dev/hn/${post.id}`,
   );
 
   return tweets;
 }
 
-function postTweetsAsThread(tweets: string[]) {
-  console.log(tweets);
+async function postTweetsAsThread(tweets: string[]) {
+  let lastTweetId: string = '';
 
-  return Promise.all(
-    tweets.map(tweet =>
-      twitter.tweetsV2.createTweet({
+  for (const tweet of tweets) {
+    try {
+      const params: CreateTweetParams = {
         text: tweet,
-      }),
-    ),
-  );
+      };
+
+      if (lastTweetId) {
+        params.reply = {
+          in_reply_to_tweet_id: lastTweetId,
+        };
+      }
+
+      const { data } = await twitter.tweetsV2.createTweet(params);
+
+      lastTweetId = data.id;
+
+      console.log('Tweet created', data.id, data.text);
+    } catch (error) {
+      console.error('Error while tweeting', tweet, error);
+    }
+  }
 }
 
 export default async function main() {
