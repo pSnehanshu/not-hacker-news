@@ -2,6 +2,11 @@ import type { IItem } from 'hacker-news-api-types';
 import { CreateTweetParams, TwitterClient } from 'twitter-api-client';
 import axios from './hn-axios';
 
+const wait = (ms = 0) =>
+  new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+
 const twitter = new TwitterClient({
   apiKey: process.env.TWITTER_API_KEY as string,
   apiSecret: process.env.TWITTER_API_SECRET as string,
@@ -63,6 +68,8 @@ async function postTweetsAsThread(tweets: string[]) {
     } catch (error) {
       console.error('Error while tweeting', tweet, error);
     }
+
+    await wait(5000);
   }
 }
 
