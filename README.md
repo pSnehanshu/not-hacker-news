@@ -6,7 +6,15 @@ Twitter bot account: [@notHackerNews](https://twitter.com/notHackerNews)
 
 ## Set up
 
-```cmd
+```bash
 npm i
+npm run build
 npm start
+```
+
+For dev
+
+```bash
+npm i
+npm run dev
 ```
