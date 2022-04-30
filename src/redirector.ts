@@ -1,14 +1,14 @@
-import express from 'express';
+import * as express from 'express';
 import type { IItem } from 'hacker-news-api-types';
-import path from 'path';
+import { join } from 'path';
 import axios from './hn-axios';
 
 const app = express();
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(join(__dirname, 'static')));
 
 app.get('/', (req, res) => res.sendStatus(200));
 
