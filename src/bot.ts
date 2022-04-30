@@ -69,7 +69,7 @@ async function postTweetsAsThread(tweets: string[]) {
       console.error('Error while tweeting', tweet, error);
     }
 
-    await wait(5000);
+    await wait(60 * 1000 * 3 /* 3 mins */);
   }
 }
 

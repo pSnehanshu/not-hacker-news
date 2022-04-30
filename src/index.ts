@@ -3,7 +3,9 @@ import * as cron from 'node-cron';
 import main from './bot';
 import redirector from './redirector';
 
-cron.schedule('0 * * * *', async () => {
+const crontab = process.env.CRONTAB || '0 * * * *';
+
+cron.schedule(crontab, async () => {
   try {
     await main();
   } catch (error) {
