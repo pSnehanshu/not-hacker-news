@@ -36,33 +36,21 @@ async function fetchTopContent(): Promise<IItem[]> {
 
 function generateTweets(posts: IItem[]) {
   const tweets = posts.map(
-    (post, index) =>
-      `${index === 0 ? 'Trending on Hacker News:\n\n' : ''}${post.title} (${
-        post.score
-      } pt) https://not-hacker-news.fly.dev/hn/${post.id}`,
+    post =>
+      `${post.title} (${post.score} pt) https://not-hacker-news.fly.dev/hn/${post.id}`,
   );
 
   return tweets;
 }
 
 async function postTweetsAsThread(tweets: string[]) {
-  let lastTweetId: string = '';
-
   for (const tweet of tweets) {
     try {
       const params: CreateTweetParams = {
         text: tweet,
       };
 
-      if (lastTweetId) {
-        params.reply = {
-          in_reply_to_tweet_id: lastTweetId,
-        };
-      }
-
       const { data } = await twitter.tweetsV2.createTweet(params);
-
-      lastTweetId = data.id;
 
       console.log('Tweet created', data.id, data.text);
     } catch (error) {
